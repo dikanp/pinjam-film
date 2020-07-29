@@ -18,13 +18,17 @@ router.post('/', async (req, res) => {
     
 
     const error = validate(req.body);
-
-    // if (error) {
-    //     return res.status(400).send(error.details[0].message)
-    // };
+    
     console.log(error)
-    if (error.details[0].message.includes('"name" length must be')) return res.status(400).send(`Nama kurang panjang `);
-    if (error) return res.status(400).send(`A new user could not be created. ${error.details[0].message}`);
+    if (error) {
+        if (error.details[0].message.includes('"name" length must be')) {
+            return res.status(400).send(`Nama kurang panjang `);
+        }
+        else {
+            return res.status(400).send(error.details[0].message)
+        }
+    };
+    // if (error) return res.status(400).send(`A new user could not be created. ${error.details[0].message}`);
 
     let user = await User.findOne({ email: req.body.email});
     if (user) return res.status(400).send('User already registered.');
