@@ -23,7 +23,7 @@ const User = mongoose.model('User', new mongoose.Schema({
         required: true,
         minlength: 8,
         maxlength: 1024,    
-        select: false
+        // select: false
     }
 
 

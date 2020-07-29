@@ -4,6 +4,7 @@ const customers = require('./routes/customers');
 const movies = require('./routes/movies');
 const rental = require('./routes/rental');
 const user = require('./routes/users');
+const auth = require('./routes/auth');
 const express = require('express');
 const mongoose = require('mongoose');
 const app = express();
@@ -19,6 +20,7 @@ app.use('/api/customers', customers);
 app.use('/api/movies', movies);
 app.use('/api/rental', rental)
 app.use('/api/users', user);
+app.use('/api/auth', auth);
 app.use(express.urlencoded());
 
 const port = process.env.PORT || 3000;
