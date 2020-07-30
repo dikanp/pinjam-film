@@ -1,7 +1,9 @@
+const { jwtPrivateKey } = require('../config');
 const {User} = require('../models/user')
 const Joi = require('@hapi/joi');
 const mongoose = require('mongoose');
 const express = require('express');
+const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const _ = require('lodash');
 const router = express.Router();
@@ -18,8 +20,10 @@ router.post('/', async (req, res) => {
     if (!user) return res.status(400).send('Invalid email or password.');
 
     const validPassword = await bcrypt.compare(req.body.password, user.password);
-    if (!validPassword) return res.status(400).send('Invalid email or password.')
-    res.send(true);
+    if (!validPassword) return res.status(400).send('Invalid email or password.');
+
+    const token = jwt.sign({ _id: user._id }, jwtPrivateKey);
+    res.send(token);
 
 });
 
